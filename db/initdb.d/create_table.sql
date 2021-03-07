@@ -1,30 +1,30 @@
 CREATE TABLE languages (
     `id`           TINYINT     NOT NULL AUTO_INCREMENT,
-    `description`  VARCHAR(3)  NOT NULL,
+    `description`  VARCHAR(6)  NOT NULL,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE pos (
     `id`           TINYINT     NOT NULL AUTO_INCREMENT,
-    `description`  VARCHAR(6)  NOT NULL,
+    `description`  VARCHAR(12)  NOT NULL,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE kinds (
     `id`           TINYINT     NOT NULL AUTO_INCREMENT,
-    `description`  VARCHAR(3)  NOT NULL,
+    `description`  VARCHAR(6)  NOT NULL,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE categories (
     `id`           TINYINT     NOT NULL AUTO_INCREMENT,
-    `description`  VARCHAR(6)  NOT NULL,
+    `description`  VARCHAR(12)  NOT NULL,
     PRIMARY KEY (id)
 );
 
 CREATE TABLE words (
     `id`           INT           NOT NULL AUTO_INCREMENT,
-    `word`         VARCHAR(150)  NOT NULL,
+    `word`         VARCHAR(300)  NOT NULL,
     `language_id`  TINYINT       NOT NULL,
     `pos_id`       TINYINT       NOT NULL,
     `kind_id`      TINYINT       NOT NULL,

@@ -5,7 +5,7 @@ CREATE TABLE languages (
 );
 
 CREATE TABLE pos (
-    `id`           TINYINT     NOT NULL AUTO_INCREMENT,
+    `id`           TINYINT      NOT NULL AUTO_INCREMENT,
     `description`  VARCHAR(12)  NOT NULL,
     PRIMARY KEY (id)
 );
@@ -17,7 +17,7 @@ CREATE TABLE kinds (
 );
 
 CREATE TABLE categories (
-    `id`           TINYINT     NOT NULL AUTO_INCREMENT,
+    `id`           TINYINT      NOT NULL AUTO_INCREMENT,
     `description`  VARCHAR(12)  NOT NULL,
     PRIMARY KEY (id)
 );
@@ -31,9 +31,17 @@ CREATE TABLE words (
     `definition`   TEXT          NOT NULL,
     `category_id`  TINYINT       NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (language_id) REFERENCES languages (id) ON UPDATE RESTRICT ON DELETE RESTRICT,
-    FOREIGN KEY (pos_id) REFERENCES pos (id) ON UPDATE RESTRICT ON DELETE RESTRICT,
-    FOREIGN KEY (kind_id) REFERENCES kinds (id) ON UPDATE RESTRICT ON DELETE RESTRICT,
-    FOREIGN KEY (category_id) REFERENCES categories (id) ON UPDATE RESTRICT ON DELETE RESTRICT
+    FOREIGN KEY (language_id) REFERENCES languages (id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+    FOREIGN KEY (pos_id) REFERENCES pos (id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+    FOREIGN KEY (kind_id) REFERENCES kinds (id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+    FOREIGN KEY (category_id) REFERENCES categories (id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT
 );
 

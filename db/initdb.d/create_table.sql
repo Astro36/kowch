@@ -45,3 +45,16 @@ CREATE TABLE words (
         ON DELETE RESTRICT
 );
 
+CREATE TABLE word_costs (
+    `id`          INT      NOT NULL AUTO_INCREMENT,
+    `start_char`  CHAR(2)  NOT NULL,
+    `end_char`    CHAR(2)  NOT NULL,
+    `length`      INT      NOT NULL,
+    `cost`        INT      NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id) REFERENCES words (id)
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+    KEY (start_char, end_char)
+);
+

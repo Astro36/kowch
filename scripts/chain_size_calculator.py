@@ -3,7 +3,7 @@ import mariadb
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser()
+    parser = ArgumentParser(conflict_handler='resolve')
     parser.add_argument('-h', '--host', help='database host', dest='db_host')
     parser.add_argument('-d', '--database', help='database name', dest='db_name')
     parser.add_argument('-u', '--user', help='database user', dest='db_user')
@@ -13,10 +13,10 @@ if __name__ == "__main__":
     conn = mariadb.connect(user=args.db_user,
                            password=args.db_password,
                            host=args.db_host,
-                           database=db_name)
+                           database=args.db_name)
     cursor = conn.cursor()
 
-    cursor.execute('SELECT DISTINCT start_char, end_char FROM v_words')
+    cursor.execute('SELECT DISTINCT start_char, end_char FROM dictionary_search')
     acronyms = cursor.fetchall()
 
     start_chars = set(start_char for start_char, _ in acronyms)

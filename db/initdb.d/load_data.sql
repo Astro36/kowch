@@ -26,8 +26,8 @@ LOAD DATA INFILE './categories.csv'
         OPTIONALLY ENCLOSED BY '"'
     (`id`, `description`);
 
-LOAD DATA INFILE './words.csv'
-    INTO TABLE words
+LOAD DATA INFILE './dictionary.csv'
+    INTO TABLE dictionary
     FIELDS
         TERMINATED BY ','
         OPTIONALLY ENCLOSED BY '"'

@@ -31,6 +31,4 @@ erl_crash.dump
 
 ### Database ###
 db
-!db/initdb.d
-db/initdb.d/dictionary.csv
 

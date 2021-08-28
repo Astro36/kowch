@@ -1,16 +1,71 @@
-version: "3"
+version: "3.9"
 
 services:
+  api:
+    image: kowch_api
+    build: api
+    depends_on:
+      - db
+    environment:
+      DB_USER: kowch
+      DB_PASSWORD_FILE: /run/secrets/db_password
+    networks:
+      - backend
+    restart: unless-stopped
+    secrets:
+      - db_password
+
   db:
-    image: mariadb:10
-    ports:
-      - 3306:3306
-    volumes:
-      - ./db/conf.d:/etc/mysql/conf.d
-      - ./db/data:/var/lib/mysql
-      - ./db/initdb.d:/docker-entrypoint-initdb.d
-    env_file: .env
+    image: postgres:13-alpine
+    deploy:
+      placement:
+        constraints:
+          - node.role==manager
+        max_replicas_per_node: 1
     environment:
       TZ: Asia/Seoul
-    restart: always
+      POSTGRES_USER: kowch
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+    networks:
+      - backend
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    secrets:
+      - db_password
+    volumes:
+      - ./db/initdb.d:/docker-entrypoint-initdb.d:ro
+      - db_data:/var/lib/postgresql/data
+
+  proxy:
+    image: nginx:alpine
+    depends_on:
+      - api
+    deploy:
+      placement:
+        constraints:
+          - node.role==manager
+        max_replicas_per_node: 1
+    environment:
+      TZ: Asia/Seoul
+    networks:
+      - backend
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: unless-stopped
+    volumes:
+      - ./proxy/conf.d:/etc/nginx/conf.d:ro
+
+networks:
+  backend:
+
+secrets:
+  db_password:
+    file: ./db/password.txt
+
+volumes:
+  db_data:
 
